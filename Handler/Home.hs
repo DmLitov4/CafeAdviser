@@ -39,7 +39,7 @@ postHomeR = do
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Cafe Adviser"
         $(widgetFile "homepage")
 
 sampleForm :: Form FileForm

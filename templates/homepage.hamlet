@@ -5,23 +5,16 @@
                 Cafe Adviser - это сервис для мгновенного выбора ресторана, кафе или бара
             <h2>
                 Вы указываете критерии, а мы ищем лучшее решение!
-            <a href="" .btn.btn-info.btn-lg>
+            <a href="#redirectto" .btn.btn-info.btn-lg>
                 Перейти к сервису
 
 <div .container>
-    <!-- Starting
-        ================================================== -->
-    <div .bs-docs-section>
+    
+    <div .bs-docs-section id="redirectto">
         <div .row>
             <div .col-lg-12>
                 <div .page-header>
-                    <h1 #start>Starting
-
-                    <p>
-                        Now that you have a working project you should use the
-                        <a href=http://www.yesodweb.com/book/>Yesod book</a> to learn more.
-                    <p>
-                        You can also use this scaffolded site to explore some concepts, and best practices.
+                    <h3 #start>Пожалуйста, заполните данную форму, и мы подберем лучшее заведение для Вас
 
                     <ul .list-group>
 
@@ -123,17 +116,3 @@
                    <ul ##{commentListId}>
 
     <hr>
-
-    <!-- Testing
-       ================================================== -->
-    <div .bs-docs-section>
-       <div .row>
-           <div .col-lg-12>
-               <div .page-header>
-                   <h1 #test>Testing
-
-                   <p>
-                       And last but not least, Testing. In <tt>test/Spec.hs</tt> you will find a #
-                       test suite that performs tests on this page.
-                   <p>
-                       You can run your tests by doing: <code>stack test</code>
