@@ -13,12 +13,12 @@
             <ul .nav.navbar-nav>
                 $forall MenuItem label route _ <- navbarLeftFilteredMenuItems
                     <li :Just route == mcurrentRoute:.active>
-                        <a href="@{route}">#{label}
+                        <a href="@{route}">Подобрать ресторан
 
             <ul .nav.navbar-nav.navbar-right>
                 $forall MenuItem label route _ <- navbarRightFilteredMenuItems
                     <li :Just route == mcurrentRoute:.active>
-                        <a href="@{route}">#{label}
+                        <a href="@{route}">Регистрация
 
 <!-- Page Contents -->
 

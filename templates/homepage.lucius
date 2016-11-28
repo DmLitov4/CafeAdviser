@@ -11,3 +11,18 @@ li {
     width: 400px;
     height: 100px;
 }
+
+.landingpage {
+	background-image: url("http://vchae.com/wp-content/uploads/2016/08/restoran.jpg");
+	-webkit-background-size: 100%;
+	-o-background-size: 100%;
+	-moz-background-size: 100%;
+	-ms-background-size: 100%;
+	-khtml-background-size: 100%;
+	background-size: 100%;
+	text-shadow: 2px 2px #000000;
+}
+
+.header {
+	text-shadow: 2px 2px #FF0000;
+}

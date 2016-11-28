@@ -1,12 +1,12 @@
 <div .masthead>
     <div .container>
-        <div .row>
+        <div .row .landingpage>
             <h1 .header>
-                Yesod—a modern framework for blazing fast websites
+                Cafe Adviser - это сервис для мгновенного выбора ресторана, кафе или бара
             <h2>
-                Fast, stable & spiced with great community
-            <a href="http://www.yesodweb.com/book/" .btn.btn-info.btn-lg>
-                Read the Book
+                Вы указываете критерии, а мы ищем лучшее решение!
+            <a href="" .btn.btn-info.btn-lg>
+                Перейти к сервису
 
 <div .container>
     <!-- Starting
