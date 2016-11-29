@@ -1,10 +1,16 @@
 <div .ui.container>
 
     <h1>
-      Access granted!
+      Добро пожаловать, <b>#{userIdent user}</b>
 
     <p>
-      This page is protected and access is allowed only for authenticated users.
+      Спасибо за регистрацию, некоторые страницы доступны только зарегистрированным пользователям.
 
     <p>
-      Your data is protected with us <strong><span class="username">#{userIdent user}</span></strong>!
+      Ваши данные надежно защищены нашей системой и не разглашаются третьим лицам.
+
+<br>
+<br>
+<br>
+<br>
+<br>

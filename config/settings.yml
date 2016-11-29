@@ -9,7 +9,7 @@ ip-from-header: "_env:IP_FROM_HEADER:false"
 # Default behavior: determine the application root from the request headers.
 # Uncomment to set an explicit approot
 #approot:        "_env:APPROOT:http://localhost:3000"
-
+approot: "http://localhost:3000"
 # Optional values with the following production defaults.
 # In development, they default to the inverse.
 #
@@ -28,5 +28,5 @@ database:
   database: "_env:SQLITE_DATABASE:team-project.sqlite3"
   poolsize: "_env:SQLITE_POOLSIZE:10"
 
-copyright: Insert copyright statement here
+copyright: "2016 (c) LightHouse MMCS Team"
 #analytics: UA-YOURCODE

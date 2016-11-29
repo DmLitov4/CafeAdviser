@@ -3,7 +3,8 @@
 <nav .navbar.navbar-default.navbar-static-top>
     <div .container>
         <div .navbar-header>
-            <img src="https://s17.postimg.org/q46p24c33/canvas.png">
+            <a href="/">
+               <img border="0" alt="CafeAdviser" src="https://s17.postimg.org/q46p24c33/canvas.png"> 
 
             <button type="button" .navbar-toggle.collapsed data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>

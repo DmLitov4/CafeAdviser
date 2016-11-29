@@ -1,8 +1,20 @@
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE TemplateHaskell       #-}
+{-# LANGUAGE TypeFamilies          #-}
+
 module Handler.Home where
 
 import Import
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 import Text.Julius (RawJS (..))
+
+import           Control.Applicative ((<$>), (<*>))
+import           Data.Text           (Text)
+import           Data.Time           (Day)
+import           Yesod
+import           Yesod.Form.Jquery
 
 -- Define our data that will be used for creating the form.
 data FileForm = FileForm
@@ -27,6 +39,7 @@ getHomeR = do
         aDomId <- newIdent
         setTitle "Cafe Adviser"
         $(widgetFile "homepage")
+
 
 postHomeR :: Handler Html
 postHomeR = do

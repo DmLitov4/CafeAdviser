@@ -7,7 +7,7 @@ import Text.Jasmine         (minifym)
 
 -- Used only when in "auth-dummy-login" setting is enabled.
 import Yesod.Auth.Dummy
-
+import Yesod.Auth.GoogleEmail
 import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
@@ -102,7 +102,7 @@ instance Yesod App where
                     , menuItemAccessCallback = isJust muser
                     }
                 , NavbarRight $ MenuItem
-                    { menuItemLabel = "Регистрация"
+                    { menuItemLabel = "Войти"
                     , menuItemRoute = AuthR LoginR
                     , menuItemAccessCallback = isNothing muser
                     }
@@ -114,7 +114,7 @@ instance Yesod App where
                 ,NavbarLeft $ MenuItem
                     { menuItemLabel = "Новости"
                     , menuItemRoute = NewNewsR
-                    , menuItemAccessCallback = True
+                    , menuItemAccessCallback = isJust muser
                     }
                 , NavbarRight $ MenuItem
                     { menuItemLabel = "Выйти"
@@ -152,6 +152,7 @@ instance Yesod App where
     isAuthorized (StaticR _) _ = return Authorized
 
     isAuthorized ProfileR _ = isAuthenticated
+    isAuthorized NewNewsR _ = isAuthenticated
 
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
@@ -184,9 +185,10 @@ instance Yesod App where
 
 -- Define breadcrumbs.
 instance YesodBreadcrumbs App where
-  breadcrumb HomeR = return ("Home", Nothing)
-  breadcrumb (AuthR _) = return ("Login", Just HomeR)
-  breadcrumb ProfileR = return ("Profile", Just HomeR)
+  breadcrumb HomeR = return ("Стартовая", Nothing)
+  breadcrumb (AuthR _) = return ("Вход/регистрация", Just HomeR)
+  breadcrumb ProfileR = return ("Профиль", Just HomeR)
+  breadcrumb NewNewsR = return ("Новости", Just HomeR)
   breadcrumb  _ = return ("home", Nothing)
 
 -- How to run database actions.
@@ -229,7 +231,7 @@ isAuthenticated :: Handler AuthResult
 isAuthenticated = do
     muid <- maybeAuthId
     return $ case muid of
-        Nothing -> Unauthorized "You must login to access this page"
+        Nothing -> Unauthorized "Вам необходимо зарегистрироваться, чтобы получить доступ к этой странице!"
         Just _ -> Authorized
 
 instance YesodAuthPersist App
