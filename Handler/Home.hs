@@ -7,6 +7,7 @@
 module Handler.Home where
 
 import Import
+import Yesod.Form.Bootstrap3
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 import Text.Julius (RawJS (..))
 
@@ -22,6 +23,20 @@ data FileForm = FileForm
     , fileDescription :: Text
     }
 
+data CafeSearch = CafeSearch
+    {  kind :: Text
+    ,  cuisine :: Text 
+    ,  bill :: Double
+    ,  city :: Text
+    }
+
+cafeSearchForm :: AForm Handler CafeSearch
+cafeSearchForm = CafeSearch
+                 <$> areq (selectFieldList [("ресторан" :: Text, "ресторан"),("кафе", "кафе"), ("бар", "бар")]) "Тип заведения:  " Nothing
+                 <*> areq (selectFieldList [("русская" :: Text, "русская"),("французская", "французская"), ("итальянская", "итальянская"), ("США", "США"), ("японская", "японская"), ("латиноамериканская", "латиноамериканская"), ("грузинская", "грузинская"), ("индийская", "индийская")]) "Предпочитаемая кухня:  " Nothing
+                 <*> areq doubleField "Средний чек: " Nothing
+                 <*> areq (selectFieldList [("Ростов-на-Дону" :: Text, "Ростов-на-Дону")]) "Город:  " Nothing
+
 -- This is a handler function for the GET request method on the HomeR
 -- resource pattern. All of your resource patterns are defined in
 -- config/routes
@@ -31,7 +46,8 @@ data FileForm = FileForm
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
+    (formWidget, formEnctype) <- generateFormPost $ renderBootstrap3 BootstrapBasicForm cafeSearchForm
+    --(widget, enctype) <- generateFormPost $ renderBootstrap3 BootstrapBasicForm cafeSearchForm 
     let submission = Nothing :: Maybe FileForm
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
@@ -39,7 +55,6 @@ getHomeR = do
         aDomId <- newIdent
         setTitle "Cafe Adviser"
         $(widgetFile "homepage")
-
 
 postHomeR :: Handler Html
 postHomeR = do
@@ -57,7 +72,7 @@ postHomeR = do
 
 sampleForm :: Form FileForm
 sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
-    <$> fileAFormReq "Choose a file"
+    <$> fileAFormReq "Выберите тип заведения: "
     <*> areq textField textSettings Nothing
     -- Add attributes like the placeholder and CSS classes.
     where textSettings = FieldSettings

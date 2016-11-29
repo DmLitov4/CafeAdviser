@@ -41,5 +41,7 @@ Restaurants
     garden Int
     deriving Eq
     deriving Show
+News
+    infotext Text
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

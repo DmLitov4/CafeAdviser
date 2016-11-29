@@ -19,16 +19,38 @@
                     <ul .list-group>
 
                         <li .list-group-item>
-                             После этого мы покажем наиболее подходящие варианты
-
-                        <li .list-group-item>
+                             После этого мы покажем наиболее подходящие варианты.
                              Необязательно заполнять все поля, но чем больше полей Вы заполните, тем
-                             точнее будет полученный результат
+                             точнее будет полученный результат.
+                        <li .list-group-item>
+                             Будут учтены следующие критерии:
+                             <br>
+                             * Тип заведения (кафе / ресторан / бар / сеть быстрого питания)
+                             <br>
+                             * Кухни, представленные в заведении (русская, итальянская, французская и т.д.)
+                             <br>
+                             * Средний чек (в расчете на одного человека)
+                             <br>
+                             * Местоположение (город и район)
+                             <br>
+                             * Особенности (можно выбрать один вариант из предложенных)
+                             <br>
+                             * Наличие парковки 
+                             <br>
+                             * Наличие караоке / танцевальной площадки
+                             <br>
+                             * Наличие двора / террасы / собственной территории
                         <li .list-group-item>
                              Желаем Вам приятного дня!
+                        <br>
+                        <center>
+                              <a href="#image1" .btn.btn-info.btn-lg.buttonwithoutshadow>
+                                    Перейти       
+
     <br>
     <br>
-    <br>
+
+
 
     <!-- Form
         ================================================== -->
@@ -37,15 +59,16 @@
         <div .row>
             <div .col-lg-6>
                 <div .page-header>
-                    <img src="/static/img/cafetable.jpeg">
-                    <h1 #forms> Форма для поиска:
+                    <img id="image1" src="/static/img/cafetable.jpeg">
+                    <h1 id="searchform" #forms> Форма для поиска:
              
 
         <div .row>
             <div .col-lg-6>
                 <div .bs-callout bs-callout-info well>
-                    <form .form-horizontal method=post action=@{HomeR}#forms enctype=#{formEnctype}>
+                        <form .form-horizontal method=post action=@{HomeR}#forms enctype=#{formEnctype}>
                         ^{formWidget}
+                    
 
                         <button .btn.btn-primary type="submit">
                             Посоветовать!
@@ -58,13 +81,13 @@
                         Your file type is <em>#{fileContentType info}</em>. You say it has: <em>#{con}</em>
 
                     $nothing
-                        File upload result will be here...
+                        Результаты будут здесь
 
 
     <hr>
 
     <!-- JSON
-        ================================================== -->
+        ================================================== 
     <div .bs-docs-section>
         <div .row>
             <div .col-lg-12>
@@ -94,5 +117,7 @@
                        Your comments will appear here. You can also open the
                        console log to see the raw response from the server.
                    <ul ##{commentListId}>
+
+    -->
 
     <hr>
