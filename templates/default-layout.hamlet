@@ -15,18 +15,14 @@
             <ul .nav.navbar-nav>
                 $forall MenuItem label route _ <- navbarLeftFilteredMenuItems
                     <li :Just route == mcurrentRoute:.active>
-                        <a href="">Подобрать заведение
-                    <li :Just route == mcurrentRoute:.active>
-                        <a href="">Топ-100
-                    <li :Just route == mcurrentRoute:.active>
-                        <a href="">Новости
-                    <li :Just route == mcurrentRoute:.active>
-                        <a href="">О нас
+                        <a href="@{route}">#{label}
+                    
 
             <ul .nav.navbar-nav.navbar-right>
                 $forall MenuItem label route _ <- navbarRightFilteredMenuItems
                     <li :Just route == mcurrentRoute:.active>
-                        <a href="@{route}">Регистрация
+                        <b>
+                            <a href="@{route}">#{label}
 
 <!-- Page Contents -->
 

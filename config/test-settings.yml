@@ -6,6 +6,6 @@ database:
   # something like:
   #
   #   database: "_env:SQLITE_DATABASE:team-project_test.sqlite3"
-  database: team-project_test.sqlite3
+  database: "_env:SQLITE_DATABASE:team-project_test.sqlite3"
 
 auth-dummy-login: true
