@@ -27,7 +27,7 @@ data CafeSearch = CafeSearch
     {  kind :: Text
     ,  cuisine :: Text 
     ,  bill :: Double
-    ,  city :: Text
+    ,  city :: Text 
     }
 
 cafeSearchForm :: AForm Handler CafeSearch

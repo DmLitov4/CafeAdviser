@@ -4,7 +4,7 @@
     <div .container>
         <div .navbar-header>
             <a href="/">
-               <img border="0" alt="CafeAdviser" src="https://s17.postimg.org/q46p24c33/canvas.png"> 
+               <img border="0" alt="CafeAdviser" src="/static/img/canvas.png"> 
 
             <button type="button" .navbar-toggle.collapsed data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>

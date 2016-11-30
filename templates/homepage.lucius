@@ -13,7 +13,7 @@ li {
 }
 
 .landingpage {
-	background-image: url("http://vchae.com/wp-content/uploads/2016/08/restoran.jpg");
+	background-image: url("/static/img/background.jpeg");
 	-webkit-background-size: 100%;
 	-o-background-size: 100%;
 	-moz-background-size: 100%;
