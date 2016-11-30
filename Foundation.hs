@@ -112,7 +112,7 @@ instance Yesod App where
                     , menuItemAccessCallback = True
                     }
                 ,NavbarLeft $ MenuItem
-                    { menuItemLabel = "Новости"
+                    { menuItemLabel = "Отзывы"
                     , menuItemRoute = NewNewsR
                     , menuItemAccessCallback = isJust muser
                     }
@@ -188,7 +188,7 @@ instance YesodBreadcrumbs App where
   breadcrumb HomeR = return ("Стартовая", Nothing)
   breadcrumb (AuthR _) = return ("Вход/регистрация", Just HomeR)
   breadcrumb ProfileR = return ("Профиль", Just HomeR)
-  breadcrumb NewNewsR = return ("Новости", Just HomeR)
+  breadcrumb NewNewsR = return ("Отзывы", Just HomeR)
   breadcrumb  _ = return ("home", Nothing)
 
 -- How to run database actions.

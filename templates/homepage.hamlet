@@ -9,7 +9,8 @@
                 Перейти к сервису
 
 <div .container>
-    
+    <!-- Starting
+        ================================================== -->
     <div .bs-docs-section id="redirectto">
         <div .row>
             <div .col-lg-12>
@@ -48,27 +49,23 @@
                                     Перейти       
 
     <br>
-    <br>
 
+    <hr>
 
-
-    <!-- Form
+    <!-- Forms
         ================================================== -->
     <div .bs-docs-section>
-
         <div .row>
-            <div .col-lg-6>
-                <div .page-header>
+            <div .col-lg-12>
+                <div .page-header id="forms">
                     <img id="image1" src="/static/img/cafetable.jpeg">
-                    <h1 id="searchform" #forms> Форма для поиска:
-             
+                    <h1 id="searchform" #forms> Форма для поиска: 
 
         <div .row>
             <div .col-lg-6>
                 <div .bs-callout bs-callout-info well>
-                        <form .form-horizontal method=post action=@{HomeR}#forms enctype=#{formEnctype}>
+                    <form .form-horizontal method=post action=@{HomeR}#forms enctype=#{formEnctype}>
                         ^{formWidget}
-                    
 
                         <button .btn.btn-primary type="submit">
                             Посоветовать!
@@ -77,47 +74,23 @@
             <div .col-lg-4.col-lg-offset-1>
                 <div .bs-callout.bs-callout-info.upload-response>
 
-                    $maybe (FileForm info con) <- submission
-                        Your file type is <em>#{fileContentType info}</em>. You say it has: <em>#{con}</em>
+                    $maybe (FileForm kind cuisine bill city area feature parking dancing garden) <- submission
+                        Вы выбрали: <br>
+
+                         <em>#{kind}</em> <br>
+                         <em>#{fromMaybe "кухня отсутствует" cuisine}</em> <br>
+                         <em>#{fromMaybe 0 bill} </em> <br>
+                         <em>#{city}</em> <br>
+                         <em>#{fromMaybe "район отсутствует" area}</em> <br>
+                         <em>#{fromMaybe "особенность не указана" feature}</em> <br>
+                         <em>#{parking}</em> <br>
+                         <em>#{dancing}</em> <br>
+                         <em>#{garden}</em> <br>
 
                     $nothing
-                        Результаты будут здесь
+                        Наилучшие результаты поиска будут здесь
 
 
-    <hr>
 
-    <!-- JSON
-        ================================================== 
-    <div .bs-docs-section>
-        <div .row>
-            <div .col-lg-12>
-                <div .page-header>
-                    <h1 #json>JSON
 
-                    <p>
-                        Yesod has JSON support baked-in.
-                        The form below makes an AJAX request with Javascript,
-                        then updates the page with your submission.
-                        (see <tt>Handler/Comment.hs</tt>, <tt>templates/homepage.julius</tt>,
-                        and <tt>Handler/Home.hs</tt> for the implementation).
-
-        <div .row>
-            <div .col-lg-6>
-                <div .bs-callout.bs-callout-info.well>
-                    <form .form-horizontal ##{commentFormId}>
-                        <div .field>
-                            <textarea rows="2" ##{commentTextareaId} placeholder="Your comment here..." required></textarea>
-
-                        <button .btn.btn-primary type=submit>
-                           Create comment
-
-           <div .col-lg-4.col-lg-offset-1>
-               <div .bs-callout.bs-callout-info>
-                   <small>
-                       Your comments will appear here. You can also open the
-                       console log to see the raw response from the server.
-                   <ul ##{commentListId}>
-
-    -->
-
-    <hr>
+    
