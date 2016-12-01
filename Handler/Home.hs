@@ -1,3 +1,12 @@
+{-# LANGUAGE EmptyDataDecls             #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GADTs                      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE QuasiQuotes                #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
 
 module Handler.Home where
 
@@ -5,7 +14,7 @@ import Import
 import Data.Maybe
 import Yesod.Form.Bootstrap3
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
-import Text.Julius (RawJS (..)) 
+import Text.Julius (RawJS (..))
 
 import           Control.Applicative ((<$>), (<*>))
 import           Data.Text           (Text)
@@ -13,18 +22,27 @@ import           Data.Time           (Day)
 import           Yesod
 import           Yesod.Form.Jquery
 
+import Database.Persist
+import Database.Persist.Sqlite
+import Database.Persist.TH
+import Control.Monad.IO.Class (liftIO)
+import Control.Monad.Trans.Resource (runResourceT)
+
+
 -- Define our data that will be used for creating the form.
 data FileForm = FileForm
-    {  kind :: Text
+    {
+       kind :: Text
     ,  cuisine :: Maybe Text
     ,  bill :: Maybe Double
-    ,  city :: Text 
+    ,  city :: Text
     ,  area :: Maybe Text
     ,  feature :: Maybe Text
     ,  parking :: Bool
     ,  dancing :: Bool
     ,  garden :: Bool
-    } 
+    }
+    deriving (Show, Eq, Read)
 
 sampleForm :: Form FileForm
 sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
@@ -38,11 +56,14 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
     <*> areq boolField "Наличие танцплощадки: * " Nothing
     <*> areq boolField "Наличие террасы / двора: * " Nothing
 
+
 getHomeR :: Handler Html
-getHomeR = do 
+getHomeR = do
+    cafeList <- runDB $ selectList [RestaurantsName ==. "Буковски"] [] --fetch data
     (formWidget, formEnctype) <- generateFormPost sampleForm
     let submission = Nothing :: Maybe FileForm
         handlerName = "getHomeR" :: Text
+
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
@@ -51,6 +72,7 @@ getHomeR = do
 
 postHomeR :: Handler Html
 postHomeR = do
+    cafeList <- runDB $ selectList [RestaurantsName ==. "Буковски"] [] ----fetch data
     ((result, formWidget), formEnctype) <- runFormPost sampleForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
@@ -65,3 +87,14 @@ postHomeR = do
 
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
+
+--cafeList :: MonadIO m => ReaderT SqlBackend m [Entity Kinds]
+--cafeList = do selectList [KindsKindname ==. "русторан"] []
+
+{-main :: IO ()
+main = runSqlite ":memory:" $ do
+    runMigration migrateAll
+    areaId <- insert $ Areas "Западный"
+    area <- get areaId
+    cafeList >>= liftIO . print
+-}

@@ -36,7 +36,7 @@
                              <br>
                              * Особенности (можно выбрать один вариант из предложенных)
                              <br>
-                             * Наличие парковки 
+                             * Наличие парковки
                              <br>
                              * Наличие караоке / танцевальной площадки
                              <br>
@@ -46,7 +46,7 @@
                         <br>
                         <center>
                               <a href="#image1" .btn.btn-info.btn-lg.buttonwithoutshadow>
-                                    Перейти       
+                                    Перейти
 
     <br>
 
@@ -59,7 +59,7 @@
             <div .col-lg-12>
                 <div .page-header id="forms">
                     <img id="image1" src="/static/img/cafetable.jpeg">
-                    <h1 id="searchform" #forms> Форма для поиска: 
+                    <h1 id="searchform" #forms> Форма для поиска:
 
         <div .row>
             <div .col-lg-6>
@@ -89,8 +89,9 @@
 
                     $nothing
                         Наилучшие результаты поиска будут здесь
-
-
-
-
-    
+                        $forall (Entity resId restaurants) <- cafeList
+                            <em><br>#{restaurantsName restaurants}</em> <br>
+                            <em>#{restaurantsBill restaurants}</em> <br>
+                            <em>#{restaurantsParking restaurants}</em> <br>
+                            <em>#{restaurantsDancing restaurants}</em> <br>
+                            <em>#{restaurantsGarden restaurants}</em> <br>

@@ -92,6 +92,8 @@ library
                  , time
                  , case-insensitive
                  , wai
+                 , transformers
+                 , resourcet
 
 executable         team-project
     if flag(library-only)
