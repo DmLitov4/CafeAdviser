@@ -89,9 +89,5 @@
 
                     $nothing
                         Наилучшие результаты поиска будут здесь
-                        $forall (Entity resId restaurants) <- cafeList
-                            <em><br>#{restaurantsName restaurants}</em> <br>
-                            <em>#{restaurantsBill restaurants}</em> <br>
-                            <em>#{restaurantsParking restaurants}</em> <br>
-                            <em>#{restaurantsDancing restaurants}</em> <br>
-                            <em>#{restaurantsGarden restaurants}</em> <br>
+                        $forall restaurantEntity <- cafeList
+                            ^{showRestaurants restaurantEntity}

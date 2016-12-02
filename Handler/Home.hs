@@ -88,13 +88,25 @@ postHomeR = do
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
 
---cafeList :: MonadIO m => ReaderT SqlBackend m [Entity Kinds]
---cafeList = do selectList [KindsKindname ==. "русторан"] []
 
-{-main :: IO ()
-main = runSqlite ":memory:" $ do
-    runMigration migrateAll
-    areaId <- insert $ Areas "Западный"
-    area <- get areaId
-    cafeList >>= liftIO . print
--}
+showRestaurants :: Entity Restaurants -> Widget
+showRestaurants (Entity restaurantid restaurant) = do
+      {-
+        Here we will make sub-queries
+      -}
+      --kind <- handlerToWidget $ runDB $ get404 $ restaurantsKindId restaurant
+      --city <- handlerToWidget $ runDB $ get404 $ restaurantsCityId restaurant
+      --area <- handlerToWidget $ runDB $ get404 $ restaurantsAreaId restaurant
+      --feature <- handlerToWidget $ runDB $ get404 $ restaurantsFeatureId restaurant
+      [whamlet|
+            <div .restaurant-info>
+                <br><em>#{restaurantsName restaurant}</em>   <br>
+                  <!--  <em>#{kindsKindname kind}</em>           <br> -->
+                    <em>#{restaurantsBill restaurant}</em>   <br>
+                  <!--  <em>#{citiesCityname city}</em>          <br> -->
+                  <!--  <em>#{areasAreaname area}</em>           <br> -->
+                  <!--  <em>#{featuresFeaturename feature}</em>  <br> -->
+                    <em>#{restaurantsParking restaurant}</em><br>
+                    <em>#{restaurantsDancing restaurant}</em><br>
+                    <em>#{restaurantsGarden restaurant}</em> <br>
+      |]
