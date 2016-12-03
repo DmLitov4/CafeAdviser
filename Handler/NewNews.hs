@@ -10,7 +10,7 @@ getNewNewsR = do
 	            defaultLayout $ do
 	              let (commentFormId, commentTextareaId, commentListId) = commentIds
 	              aDomId <- newIdent
-	              setTitle . toHtml $ userIdent user <> "' - Страница новостей"	             
+	              setTitle . toHtml $ userIdent user <> "' - Страница отзывов"	             
 	              $(widgetFile "news/new")
 
 commentIds :: (Text, Text, Text)

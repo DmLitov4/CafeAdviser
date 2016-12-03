@@ -25,6 +25,10 @@ Kinds
     kindname Text
     deriving Eq
     deriving Show
+Cuisines
+    cuisinename Text
+    deriving Eq
+    deriving Show
 Features
     featurename Text
     deriving Eq
@@ -32,6 +36,7 @@ Features
 Restaurants
     name Text
     kindId KindsId
+    cuisineId CuisinesId
     bill Int
     cityId CitiesId
     areaId AreasId

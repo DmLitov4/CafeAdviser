@@ -75,7 +75,7 @@
                 <div .bs-callout.bs-callout-info.upload-response>
 
                     $maybe (FileForm kind cuisine bill city area feature parking dancing garden) <- submission
-                        Вы выбрали: <br>
+                        <!-- Вы выбрали: <br>
 
                          <em>#{kind}</em> <br>
                          <em>#{fromMaybe "кухня отсутствует" cuisine}</em> <br>
@@ -86,8 +86,17 @@
                          <em>#{parking}</em> <br>
                          <em>#{dancing}</em> <br>
                          <em>#{garden}</em> <br>
+                         
+                         <br> -->
+
+                         <!-- $forall restaurantEntity <- cafeList
+                            ^{showRestaurants restaurantEntity} -->
+                         
+                         <b>Мы выбрали лучшие варианты для Вас:</b>
+
+                         $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
+                            ^{showRestaurants restaurantEntity2}
 
                     $nothing
                         Наилучшие результаты поиска будут здесь
-                        $forall restaurantEntity <- cafeList
-                            ^{showRestaurants restaurantEntity}
+                        

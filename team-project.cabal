@@ -94,6 +94,7 @@ library
                  , wai
                  , transformers
                  , resourcet
+                 , blaze-markup
 
 executable         team-project
     if flag(library-only)
