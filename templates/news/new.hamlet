@@ -1,6 +1,13 @@
 <center>
     <h2>
-        Отзывы
+        Добавить отзыв
+    <div .row>
+            <div .col-lg-6>
+                   <div .bs-callout bs-callout-info well>
+                       <form method=post action=@(NewNewsR) enctype=#{formEnctype}>
+                           ^{formWidget}
+
+    <h2> Все отзывы </h2>
 <br>
 <br>
 <br>

@@ -28,6 +28,9 @@ import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Trans.Resource (runResourceT)
 import Database.Persist.Types (PersistValue(PersistInt64))
 import Data.Function (on)
+import Control.Monad.IO.Class (liftIO)
+import Control.Applicative
+
 
 data FileForm = FileForm
     {
@@ -89,8 +92,23 @@ commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
 
 countMatchesBill :: FileForm -> Entity Restaurants -> Integer
 countMatchesBill cf (Entity restaurantid restaurant)
-                                          | (abs(fromJust(bill cf) - fromIntegral(restaurantsBill restaurant)) < 400.0) = 1                                         
+                                          | (abs(fromJust(bill cf) - fromIntegral(restaurantsBill restaurant)) < 400.0) = 4                                         
                                           | otherwise = 0
+
+countMatchesKind :: FileForm -> Entity Restaurants -> Integer
+countMatchesKind cf (Entity restaurantid restaurant) = 0
+                                        --  if (fromJust (get restaurantsKindId) == 1) then return 5 
+                                        --    else
+                                        --       return 0
+
+countMatchesCuisine :: FileForm -> Entity Restaurants -> Integer
+countMatchesCuisine cf (Entity restaurantid restaurant) = 0
+
+countMatchesArea :: FileForm -> Entity Restaurants -> Integer
+countMatchesArea cf (Entity restaurantid restaurant) = 0
+
+countMatchesFeature :: FileForm -> Entity Restaurants -> Integer
+countMatchesFeature cf (Entity restaurantid restaurant) = 0
 
 -- in one fold we take 5 best pairs (Mathces, Cafe) from list sorted by matches and then we just take snd from them and add to result list
 filterRestaurants :: FileForm -> [Entity Restaurants] -> [Entity Restaurants]
@@ -99,7 +117,10 @@ filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 1 (Data.L
       where allpairs acc curcafe = do
                                    --k <- runDB $ get404 (restaurantsKindId curcafe)
                                    let billmatch = countMatchesBill cf curcafe
-                                   acc Data.List.++ [(billmatch, [curcafe])]
+                                       cuisinematch = countMatchesCuisine cf curcafe
+                                       areamatch = countMatchesArea cf curcafe
+                                       featurematch = countMatchesFeature cf curcafe
+                                   acc Data.List.++ [(billmatch + cuisinematch + areamatch + featurematch, [curcafe])]
       -- and here we create results list [Entity Restaurants]
             createresult acc2 x = acc2 Data.List.++ (snd x)
 

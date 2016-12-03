@@ -16,7 +16,6 @@
             <div .col-lg-12>
                 <div .page-header>
                     <h3 #start>Пожалуйста, заполните данную форму, и мы подберем лучшее заведение для Вас
-
                     <ul .list-group>
 
                         <li .list-group-item>
@@ -52,7 +51,7 @@
 
     <hr>
 
-    <!-- Forms
+    <!-- Forms 
         ================================================== -->
     <div .bs-docs-section>
         <div .row>
@@ -92,7 +91,7 @@
                          <!-- $forall restaurantEntity <- cafeList
                             ^{showRestaurants restaurantEntity} -->
                          
-                         <b>Мы выбрали лучшие варианты для Вас:</b>
+                         <em>Мы выбрали лучшие варианты для Вас:</em>
 
                          $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
                             ^{showRestaurants restaurantEntity2}
