@@ -127,24 +127,24 @@ getForeignFeature t
 
 countMatchesBill :: FileForm -> Entity Restaurants -> Integer
 countMatchesBill cf (Entity restaurantid restaurant)
-                                          | (abs(fromMaybe 0 (bill cf) - fromIntegral(restaurantsBill restaurant)) < 400.0) = 9                                         
+                                          | (abs(fromMaybe 0 (bill cf) - fromIntegral(restaurantsBill restaurant)) < 200.0) = 9                                         
                                           | otherwise = 0
 
 countMatchesKind :: FileForm -> Entity Restaurants -> Integer
 countMatchesKind cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsKindId restaurant) == getForeignKind (kind cf)) then 10 else 0
 
 countMatchesCuisine :: FileForm -> Entity Restaurants -> Integer
-countMatchesCuisine cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsCuisineId restaurant) == getForeignCuisine (fromMaybe " " (cuisine cf))) then 6 else 0
+countMatchesCuisine cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsCuisineId restaurant) == getForeignCuisine (fromMaybe " " (cuisine cf))) then 8 else 0
 
 countMatchesArea :: FileForm -> Entity Restaurants -> Integer
-countMatchesArea cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsAreaId restaurant) == getForeignArea (fromMaybe " " (area cf))) then 5 else 0
+countMatchesArea cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsAreaId restaurant) == getForeignArea (fromMaybe " " (area cf))) then 4 else 0
 
 countMatchesFeature :: FileForm -> Entity Restaurants -> Integer
-countMatchesFeature cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsFeatureId restaurant) == getForeignArea (fromMaybe " " (feature cf))) then 4 else 0
+countMatchesFeature cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsFeatureId restaurant) == getForeignArea (fromMaybe " " (feature cf))) then 3 else 0
 
 -- in one fold we take 5 best pairs (Mathces, Cafe) from list sorted by matches and then we just take snd from them and add to result list
 filterRestaurants :: FileForm -> [Entity Restaurants] -> [Entity Restaurants]
-filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 5 (Data.List.reverse(Data.List.sortBy (compare `on` fst)(foldl allpairs [] restlist)))))
+filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 3 (Data.List.reverse(Data.List.sortBy (compare `on` fst)(foldl allpairs [] restlist)))))
       -- here we create a list that contains all cafes in pairs like (number of matches, Entity Restaurants)
       where allpairs acc curcafe = do                                   
                                    let billmatch = countMatchesBill cf curcafe

@@ -107,7 +107,7 @@ instance Yesod App where
                     , menuItemAccessCallback = isNothing muser
                     }
                 , NavbarLeft $ MenuItem
-                    { menuItemLabel = "Топ-100"
+                    { menuItemLabel = "Добавить"
                     , menuItemRoute = HomeR
                     , menuItemAccessCallback = True
                     }
