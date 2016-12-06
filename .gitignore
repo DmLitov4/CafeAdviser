@@ -1,0 +1,34 @@
+# haskell and yesod
+
+dist/
+dist-*/
+cabal-dev
+*~
+*.o
+*.o_p
+*.hi
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv/
+.cabal-sandbox/
+cabal.sandbox.config
+*.prof
+*.aux
+*.hp
+*.swp
+*.eventlog
+.stack-work/
+cabal.project.local
+.HTF/
+client_session_key.aes
+yesod/foobar/
+/vendor/
+.shelly/
+tarballs/
+
+# sqlite3
+
+*.sqlite3-*
