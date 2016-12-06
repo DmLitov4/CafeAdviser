@@ -44,6 +44,7 @@ Restaurants
     parking Int
     dancing Int
     garden Int
+    description Text
     deriving Eq
     deriving Show
 News

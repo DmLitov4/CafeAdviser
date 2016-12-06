@@ -28,6 +28,8 @@ yesod/foobar/
 /vendor/
 .shelly/
 tarballs/
+tmp/
+yesod-devel/
 
 # sqlite3
 
