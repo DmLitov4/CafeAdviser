@@ -5,10 +5,10 @@
     <div .row>
             <div .col-lg-6>
                    <div .bs-callout bs-callout-info well>
-                       <form method=post action=@(NewNewsR) enctype=#{formEnctype}>
+                       <form method=post action=@{NewNewsR} enctype=#{formEnctype}>
                            ^{formWidget}
-                       <button .btn.btn-primary type="submit">
-                            Добавить
+                           <button .btn.btn-primary type="submit">
+                               Добавить
     <center>
        <h2> Все отзывы </h2> 
 <br>
