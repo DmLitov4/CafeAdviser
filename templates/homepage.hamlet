@@ -93,8 +93,19 @@
                          
                          <em>Мы выбрали лучшие варианты для Вас:</em>
 
-                         $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
+                        <!-- $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
+                            ^{showRestaurants restaurantEntity2} -->
+                        $forall (m, restaurantEntity2) <- (filterRestaurants2 (fromJust submission) cafeList)
                             ^{showRestaurants restaurantEntity2}
+                             <em> #{m} </em>
+
+                        <!-- <br>
+                        <br>
+                        <br>
+
+                        $forall (m, rest3) <- (filterRestaurants3 (fromJust submission) cafeList)
+                           ^{showRestaurants rest3}
+                           <em> #{m} </em> -->
 
                     $nothing
                         Наилучшие результаты поиска будут здесь
