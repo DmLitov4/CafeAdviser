@@ -4,7 +4,7 @@ h2##{aDomId} {
 
 li {
     line-height: 2em;
-    font-size: 16px
+    font-size: 17px
 }
 
 ##{commentTextareaId} {
@@ -29,4 +29,17 @@ li {
 
 .buttonwithoutshadow {
 	text-shadow: none;
+}
+
+.lefti {
+   float: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cafeimg:hover {
+  -webkit-transform: scale(3,3);
 }

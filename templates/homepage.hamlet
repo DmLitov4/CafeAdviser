@@ -19,7 +19,8 @@
                     <ul .list-group>
 
                         <li .list-group-item>
-                             После этого мы покажем наиболее подходящие варианты.
+                             После этого мы покажем наиболее подходящие варианты. <br>
+                             Обязательные поля отмечены звездочкой. <br>
                              Необязательно заполнять все поля, но чем больше полей Вы заполните, тем
                              точнее будет полученный результат.
                         <li .list-group-item>
@@ -92,12 +93,12 @@
                             ^{showRestaurants restaurantEntity} -->
                          
                          <em>Мы выбрали лучшие варианты для Вас:</em>
-
-                        <!-- $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
-                            ^{showRestaurants restaurantEntity2} -->
-                        $forall (m, restaurantEntity2) <- (filterRestaurants2 (fromJust submission) cafeList)
-                            ^{showRestaurants restaurantEntity2}
-                             <em> #{m} </em>
+                         <br>
+                        $forall restaurantEntity2 <- (filterRestaurants (fromJust submission) cafeList)
+                            ^{showRestaurants restaurantEntity2} 
+                        <!-- $forall (m, restaurantEntity2) <- (filterRestaurants2 (fromJust submission) cafeList)
+                            ^{showRestaurants restaurantEntity2} 
+                             <em> #{m} </em> -->
 
                         <!-- <br>
                         <br>

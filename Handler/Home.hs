@@ -40,9 +40,9 @@ data FileForm = FileForm
     ,  city    :: Text
     ,  area    :: Maybe Text
     ,  feature :: Maybe Text
-    ,  parking :: Bool
-    ,  dancing :: Bool
-    ,  garden  :: Bool
+    ,  parking :: Maybe Bool
+    ,  dancing :: Maybe Bool
+    ,  garden  :: Maybe Bool
     }
     deriving (Show, Eq, Read)
 
@@ -54,9 +54,9 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
     <*> areq (selectFieldList [("Ростов-на-Дону" :: Text, "Ростов-на-Дону")]) "Город:  * " Nothing
     <*> aopt (selectFieldList [("Центр" :: Text, "Центр"), ("Западный", "Западный"), ("Северный", "Северный"), ("Александровка", "Александровка"), ("Сельмаш", "Сельмаш")]) "Район:  " Nothing
     <*> aopt (selectFieldList [("День Рождения" :: Text, "День Рождения"), ("свадьба", "свадьба"), ("корпоратив", "корпоратив")]) "Подходит для:  " Nothing
-    <*> areq boolField        "Наличие парковки:  * " Nothing
-    <*> areq boolField        "Наличие танцплощадки: * " Nothing
-    <*> areq boolField        "Наличие террасы / двора: * " Nothing
+    <*> aopt boolField        "Наличие парковки:  * " Nothing
+    <*> aopt boolField        "Наличие танцплощадки: * " Nothing
+    <*> aopt boolField        "Наличие террасы / двора: * " Nothing
 
 
 getHomeR :: Handler Html
@@ -125,22 +125,37 @@ getForeignFeature t
                | t == "корпоратив" = 3
                | otherwise = -1
 
+getFromBool :: Bool -> Int
+getFromBool b
+          | b == True = 1
+          | b == False = 0
+          | otherwise = -1
+
 countMatchesBill :: FileForm -> Entity Restaurants -> Integer
 countMatchesBill cf (Entity restaurantid restaurant)
                                           | (abs(fromMaybe 0 (bill cf) - fromIntegral(restaurantsBill restaurant)) < 200.0) = 10                                      
                                           | otherwise = 0
 
 countMatchesKind :: FileForm -> Entity Restaurants -> Integer
-countMatchesKind cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsKindId restaurant) == getForeignKind (kind cf)) then 20 else 0
+countMatchesKind cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsKindId restaurant) == getForeignKind (kind cf)) then 18 else 0
 
 countMatchesCuisine :: FileForm -> Entity Restaurants -> Integer
-countMatchesCuisine cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsCuisineId restaurant) == getForeignCuisine (fromMaybe " " (cuisine cf))) then 18 else 0
+countMatchesCuisine cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsCuisineId restaurant) == getForeignCuisine (fromMaybe " " (cuisine cf))) then 13 else 0
 
 countMatchesArea :: FileForm -> Entity Restaurants -> Integer
 countMatchesArea cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsAreaId restaurant) == getForeignArea (fromMaybe " " (area cf))) then 5 else 0
 
 countMatchesFeature :: FileForm -> Entity Restaurants -> Integer
 countMatchesFeature cf (Entity restaurantid restaurant) = if (fromSqlKey(restaurantsFeatureId restaurant) == getForeignArea (fromMaybe " " (feature cf))) then 3 else 0
+
+countMatchesParking :: FileForm -> Entity Restaurants -> Integer
+countMatchesParking cf (Entity restaurantid restaurant) = if (fromIntegral(restaurantsParking restaurant) == getFromBool (fromMaybe False (parking cf)) && (parking cf) /= Nothing) then 3 else 0
+
+countMatchesDancing :: FileForm -> Entity Restaurants -> Integer
+countMatchesDancing cf (Entity restaurantid restaurant) = if (fromIntegral(restaurantsDancing restaurant) == getFromBool (fromMaybe False (dancing cf)) && (dancing cf) /= Nothing) then 3 else 0
+
+countMatchesGarden :: FileForm -> Entity Restaurants -> Integer
+countMatchesGarden cf (Entity restaurantid restaurant) = if (fromIntegral(restaurantsGarden restaurant) == getFromBool (fromMaybe False (garden cf)) && (garden cf) /= Nothing) then 3 else 0
 
 -- in one fold we take 5 best pairs (Mathces, Cafe) from list sorted by matches and then we just take snd from them and add to result list
 filterRestaurants :: FileForm -> [Entity Restaurants] -> [Entity Restaurants]
@@ -152,6 +167,9 @@ filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 3 (Data.L
                                        cuisinematch = countMatchesCuisine cf curcafe
                                        areamatch = countMatchesArea cf curcafe
                                        featurematch = countMatchesFeature cf curcafe
+                                       parkingmatch = countMatchesParking cf curcafe
+                                       dancingmatch = countMatchesDancing cf curcafe
+                                       gardenmatch = countMatchesGarden cf curcafe
 
                                    acc Data.List.++ [(kindmatch + billmatch + cuisinematch + areamatch + featurematch, [curcafe])]
       -- and here we create results list [Entity Restaurants]
@@ -171,19 +189,6 @@ filterRestaurants2 cf restlist = (foldl createresult [] (Data.List.take 3 (Data.
       -- and here we create results list [Entity Restaurants]
             createresult acc2 x = acc2 Data.List.++ [(fst x, snd x)]
 
-{-filterRestaurants3 cf restlist = (foldl createresult [] ((Data.List.reverse(Data.List.sortBy (compare `on` fst)(foldl allpairs [] restlist)))))
-      -- here we create a list that contains all cafes in pairs like (number of matches, Entity Restaurants)
-      where allpairs acc curcafe = do                                   
-                                   let billmatch = countMatchesBill cf curcafe
-                                       kindmatch = countMatchesKind cf curcafe
-                                       cuisinematch = countMatchesCuisine cf curcafe
-                                       areamatch = countMatchesArea cf curcafe
-                                       featurematch = countMatchesFeature cf curcafe
-                                   
-                                   acc Data.List.++ [(kindmatch + billmatch + cuisinematch + areamatch + featurematch, curcafe)]
-      -- and here we create results list [Entity Restaurants]
-            createresult acc2 x = acc2 Data.List.++ [(fst x, snd x)] -}
-
 
 showRestaurants :: Entity Restaurants -> Widget
 showRestaurants (Entity restaurantid restaurant) = do
@@ -194,15 +199,21 @@ showRestaurants (Entity restaurantid restaurant) = do
       feature <- handlerToWidget $ runDB $ get404 (restaurantsFeatureId restaurant)
     
       [whamlet|
-            <div .restaurant-info>
-              <br><em><b>#{restaurantsName restaurant}</b></em>     <br>
-                    <em>Тип заведения: #{kindsKindname (kind)}</em>           <br>
-                    <em>Основная кухня: #{cuisinesCuisinename (cuisine)} </em> <br>
-                    <em>Средний чек (на одного человека): #{restaurantsBill restaurant}</em>     <br>
-                    <em>Город: #{citiesCityname (city)}</em>          <br> 
-                    <em>Район: #{areasAreaname area}</em>             <br> 
-                    <em>Подходит для: #{featuresFeaturename feature}</em>    <br> 
-                    <em>Наличие парковки: #{restaurantsParking restaurant}</em>  <br>
-                    <em>Наличие караоке / танцевальной площадки: #{restaurantsDancing restaurant}</em>  <br>
-                    <em>Наличие террасы / двора: #{restaurantsGarden restaurant}</em>   <br>
+            <div .restaurant-info>         
+                      <p style="padding: 10px">
+                         <img class="cafeimg" src="#{restaurantsImage restaurant}" width="120" class="lefti" />
+                         
+                         &nbsp <br> &nbsp &nbsp  <b>#{restaurantsName restaurant}</b>  <br>
+                         <br>
+                         <br>
+                         <br>
+                         Тип заведения: <em>  #{kindsKindname (kind)}</em>           <br>
+                         Основная кухня: <em> #{cuisinesCuisinename (cuisine)} </em> <br>
+                         Средний чек (на одного человека): <em> #{restaurantsBill restaurant}  </em>   <br>
+                         Город: <em> #{citiesCityname (city)} </em>          <br> 
+                         Район: <em> #{areasAreaname area}</em>             <br> 
+                         Подходит для: <em> #{featuresFeaturename feature}</em>    <br> 
+                         Наличие парковки: <em> #{restaurantsParking restaurant}</em>  <br>
+                         Наличие караоке / танцевальной площадки: <em> #{restaurantsDancing restaurant}</em>  <br>
+                         Наличие террасы / двора: <em> #{restaurantsGarden restaurant}</em>   <br>
       |]

@@ -3,14 +3,15 @@
         ================================================== -->
     <div .bs-docs-section id="redirectto">
         <div .page-header>
-            <h3 #start>Здесь Вы сможете добавить своё заведение на Наш сервис
+            <h3 #start>Здесь Вы сможете добавить своё заведение на наш сервис:
 
     <!-- Forms
         ================================================== -->
     <div .bs-docs-section>
         <div .page-header id="forms">
             <img id="image2" src="/static/img/cafe2.jpeg" width="300">
-            <h3 id="searchform" #forms> Заполните форму:
+            <br>
+            <h4 id="searchform" #forms> Пожалуйста, заполните форму. Все поля обязательны для заполнения.
 
         <div .row>
             <div .col-lg-6>
