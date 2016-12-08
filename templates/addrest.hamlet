@@ -1,0 +1,22 @@
+<div .container>
+    <!-- Starting
+        ================================================== -->
+    <div .bs-docs-section id="redirectto">
+        <div .page-header>
+            <h3 #start>Здесь Вы сможете добавить своё заведение на Наш сервис
+
+    <!-- Forms
+        ================================================== -->
+    <div .bs-docs-section>
+        <div .page-header id="forms">
+            <img id="image2" src="/static/img/cafe2.jpeg" width="300">
+            <h3 id="searchform" #forms> Заполните форму:
+
+        <div .row>
+            <div .col-lg-6>
+                <div .bs-callout bs-callout-info well>
+                    <form .form-horizontal method=post action=@{RestAddR} enctype=#{formEnctype}>
+                        ^{formWidget}
+
+                        <button .btn.btn-primary type="submit">
+                            Добавить

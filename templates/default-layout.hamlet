@@ -4,7 +4,7 @@
     <div .container>
         <div .navbar-header>
             <a href="/">
-               <img border="0" alt="CafeAdviser" src="/static/img/canvas.png"> 
+               <img border="0" alt="CafeAdviser" src="/static/img/canvas.png">
 
             <button type="button" .navbar-toggle.collapsed data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -17,7 +17,7 @@
                 $forall MenuItem label route _ <- navbarLeftFilteredMenuItems
                     <li :Just route == mcurrentRoute:.active>
                         <a href="@{route}">#{label}
-                    
+
 
             <ul .nav.navbar-nav.navbar-right>
                 $forall MenuItem label route _ <- navbarRightFilteredMenuItems
