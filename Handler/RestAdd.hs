@@ -18,6 +18,8 @@ data AddRestForm = AddRestForm
     ,  parking :: Bool
     ,  dancing :: Bool
     ,  garden  :: Bool
+    ,  description :: Text
+    ,  image :: Text
     }
     deriving (Show, Eq, Read)
 
@@ -33,6 +35,8 @@ addForm = renderBootstrap3 BootstrapBasicForm $ AddRestForm
     <*> areq boolField        "Наличие парковки:    " Nothing
     <*> areq boolField        "Наличие танцплощадки:  " Nothing
     <*> areq boolField        "Наличие террасы / двора:   " Nothing
+    <*> areq textField        "Описание" Nothing
+    <*> areq textField        "Ссылка на изображение" Nothing
 
 
 getRestAddR :: Handler Html
