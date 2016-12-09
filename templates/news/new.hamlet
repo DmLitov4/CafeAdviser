@@ -1,7 +1,7 @@
     <center>
       <h2>
           Добавить отзыв
-   
+
     <div .row>
             <div .col-lg-6>
                    <div .bs-callout bs-callout-info well>
@@ -10,7 +10,10 @@
                            <button .btn.btn-primary type="submit">
                                Добавить
     <center>
-       <h2> Все отзывы </h2> 
+       <h2> Все отзывы </h2>
+
+    $forall rate <- newsList
+        ^{allNews rate} -->
 <br>
 <br>
 <br>

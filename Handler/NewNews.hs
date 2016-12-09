@@ -6,7 +6,6 @@ import Yesod.Form.Bootstrap3
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 import Text.Julius (RawJS (..))
 import Text.Blaze
-import Data.List
 import Control.Applicative ((<$>), (<*>))
 import Data.Text           (Text)
 import Data.Time           (Day)
@@ -28,15 +27,13 @@ data RateForm = RateForm
 
 rateSampleForm :: Form RateForm
 rateSampleForm = renderBootstrap3 BootstrapBasicForm $ RateForm
-    <$> areq textField "Название заведения: " Nothing
-    <*> areq textField "Отзыв: " Nothing
-
+    <$> areq textField (bfs ("Название заведения: " :: Text)) Nothing
+    <*> areq textField (bfs ("Отзыв: " :: Text)) Nothing
 
 getNewNewsR :: Handler Html
 getNewNewsR = do
+    newsList <- runDB $ selectList [] []
     (formWidget, formEnctype) <- generateFormPost rateSampleForm
-    let submission = Nothing :: Maybe RateForm
-        handlerName = "getNewNewsR" :: Text
 
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
@@ -46,17 +43,31 @@ getNewNewsR = do
 
 postNewNewsR :: Handler Html
 postNewNewsR = do
+    newsList <- runDB $ selectList [] []
     ((result, formWidget), formEnctype) <- runFormPost rateSampleForm
-    let handlerName = "postNewNewsR" :: Text
-        submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
+    case result of
+            FormSuccess news -> do
+            	                _ <- runDB $ insert $ News (title news) $ (rate news)
+            	                defaultLayout $ do
+            	                let (commentFormId, commentTextareaId, commentListId) = commentIds
+                                aDomId <- newIdent
+                                setTitle "Cafe Adviser - страница отзывов"
+            	                $(widgetFile "news/new")
+            _ -> defaultLayout $ do
+                              let (commentFormId, commentTextareaId, commentListId) = commentIds
+                              aDomId <- newIdent
+                              setTitle "Cafe Adviser - страница отзывов"
+                              $(widgetFile "news/new")
 
-    defaultLayout $ do
-        let (commentFormId, commentTextareaId, commentListId) = commentIds
-        aDomId <- newIdent
-        setTitle "Cafe Adviser - старница отзывов"
-        $(widgetFile "news/new")
+allNews :: Entity News -> Widget
+allNews (Entity rateid rate) = do
+  [whamlet|
+    <div>
+       <ul>
+          <li>
+            <p>
+              <em>Название заведения:</em> <b> #{newsTitle rate} </b> <br>
+              <em>#{newsInfotext rate} </em> <br> |]
 
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
