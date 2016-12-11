@@ -2,6 +2,14 @@ module Handler.RestAdd where
 
 import Yesod.Form.Bootstrap3
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
+import Data.Maybe
+
+import Database.Persist
+import Database.Persist.Sqlite
+import Database.Persist.TH
+import Control.Monad.IO.Class (liftIO)
+import Control.Monad.Trans.Resource (runResourceT)
+import Database.Persist.Types (PersistValue(PersistInt64))
 
 import Import
 
@@ -22,6 +30,44 @@ data AddRestForm = AddRestForm
     ,  image :: Text
     }
     deriving (Show, Eq, Read)
+
+getForeignKind :: Text -> Key Kinds
+getForeignKind t
+               | t == "ресторан" = toSqlKey 1
+               | t == "кафе" = toSqlKey 2
+               | t == "бар" = toSqlKey 3
+               | otherwise = toSqlKey (-1)
+
+getForeignCuisine :: Text -> Key Cuisines
+getForeignCuisine t
+                  | t == "русская" = toSqlKey  1
+                  | t == "французская" = toSqlKey 2
+                  | t == "итальянская" = toSqlKey 3
+                  | t == "США" = toSqlKey 4
+                  | t == "японская" = toSqlKey 5
+                  | t == "латиноамериканская" = toSqlKey 6
+                  | t == "грузинская" = toSqlKey 7
+                  | t == "индийская" = toSqlKey 8
+                  | otherwise = toSqlKey (-1)
+
+getForeignArea :: Text -> Key Areas
+getForeignArea t
+               | t == "Центр" = toSqlKey 1
+               | t == "Западный" = toSqlKey 2
+               | t == "Северный" = toSqlKey 3
+               | t == "Александровка" = toSqlKey 4
+               | t == "Сельмаш" = toSqlKey 5
+               | otherwise = toSqlKey (-1)
+
+getForeignFeature :: Text -> Key Features
+getForeignFeature t
+                  | t == "День Рождения" = toSqlKey(1)
+                  | t == "свадьба" = toSqlKey(2)
+                  | t == "корпоратив" = toSqlKey(3)
+                  | otherwise = toSqlKey (-1)
+
+getForeignCity :: Key Cities
+getForeignCity = toSqlKey 1
 
 addForm :: Form AddRestForm
 addForm = renderBootstrap3 BootstrapBasicForm $ AddRestForm
@@ -51,15 +97,8 @@ postRestAddR = do
     ((result, formWidget), formEnctype) <- runFormPost addForm
     case result of
       FormSuccess newRest -> do
-                          --Insert data in Kinds, Cuisines, Cities, Areas and Features tables--
-                          kindId <- runDB $ insert $ Kinds (kind newRest)                    --kind id in Kinds Table
-                          cuisineId <- runDB $ insert $ Cuisines (cuisine newRest)            --cuisin id in Cuisines Table
-                          cityId <- runDB $ insert $ Cities (city newRest)                   --city id in Cities Table
-                          areaId <- runDB $ insert $ Areas (area newRest)                    --area id in Areas Table
-                          featureId <- runDB $ insert $ Features (feature newRest)           --feature id in Features Table
-
                           --Now we inserts new restaurant in Restaurants table--
-                          restId <- runDB $ insert $ Restaurants (name newRest) (kindId) (cuisineId) (bill newRest) (cityId) (areaId) (featureId) (boolToInt (parking newRest) ) (boolToInt (dancing newRest) ) (boolToInt (garden newRest) ) (description newRest) (image newRest)
+                          restId <- runDB $ insert $ Restaurants (name newRest) (getForeignKind (kind newRest)) (getForeignCuisine (cuisine newRest)) (bill newRest) (getForeignCity) (getForeignArea (area newRest)) (getForeignFeature (feature newRest)) (boolToInt (parking newRest) ) (boolToInt (dancing newRest) ) (boolToInt (garden newRest) ) (description newRest) (image newRest)
                           maybeRest <- runDB $ get restId
                           case maybeRest of
                               Nothing -> error "Our restaurant was not added"
