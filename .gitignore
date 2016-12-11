@@ -1,5 +1,7 @@
 # haskell and yesod
 
+*.out
+,
 dist/
 dist-*/
 cabal-dev
