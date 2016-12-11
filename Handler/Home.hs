@@ -29,7 +29,7 @@ import Control.Monad.Trans.Resource (runResourceT)
 import Database.Persist.Types (PersistValue(PersistInt64))
 import Data.Function (on)
 import Control.Monad.IO.Class (liftIO)
-import Control.Applicative 
+import Control.Applicative
 
 
 data FileForm = FileForm
@@ -61,7 +61,7 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
 
 getHomeR :: Handler Html
 getHomeR = do
-    cafeList <- runDB $ selectList [] [] 
+    cafeList <- runDB $ selectList [] []
     (formWidget, formEnctype) <- generateFormPost sampleForm
     let submission = Nothing :: Maybe FileForm
         handlerName = "getHomeR" :: Text
@@ -74,7 +74,7 @@ getHomeR = do
 
 postHomeR :: Handler Html
 postHomeR = do
-    cafeList <- runDB $ selectList [] [] 
+    cafeList <- runDB $ selectList [] []
     ((result, formWidget), formEnctype) <- runFormPost sampleForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
@@ -133,7 +133,7 @@ getFromBool b
 
 countMatchesBill :: FileForm -> Entity Restaurants -> Integer
 countMatchesBill cf (Entity restaurantid restaurant)
-                                          | (abs(fromMaybe 0 (bill cf) - fromIntegral(restaurantsBill restaurant)) < 200.0) = 10                                      
+                                          | (abs(fromMaybe 0 (bill cf) - fromIntegral(restaurantsBill restaurant)) < 200.0) = 10
                                           | otherwise = 0
 
 countMatchesKind :: FileForm -> Entity Restaurants -> Integer
@@ -161,7 +161,7 @@ countMatchesGarden cf (Entity restaurantid restaurant) = if (fromIntegral(restau
 filterRestaurants :: FileForm -> [Entity Restaurants] -> [Entity Restaurants]
 filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 3 (Data.List.reverse(Data.List.sortBy (compare `on` fst)(foldl allpairs [] restlist)))))
       -- here we create a list that contains all cafes in pairs like (number of matches, Entity Restaurants)
-      where allpairs acc curcafe = do                                   
+      where allpairs acc curcafe = do
                                    let billmatch = countMatchesBill cf curcafe
                                        kindmatch = countMatchesKind cf curcafe
                                        cuisinematch = countMatchesCuisine cf curcafe
@@ -178,13 +178,13 @@ filterRestaurants cf restlist = (foldl createresult [] (Data.List.take 3 (Data.L
 --filterRestaurants2 :: FileForm -> [Entity Restaurants] -> [(Int, Entity Restaurants)]
 filterRestaurants2 cf restlist = (foldl createresult [] (Data.List.take 3 (Data.List.reverse(Data.List.sortBy (compare `on` fst)(foldl allpairs [] restlist)))))
       -- here we create a list that contains all cafes in pairs like (number of matches, Entity Restaurants)
-      where allpairs acc curcafe = do                                   
+      where allpairs acc curcafe = do
                                    let billmatch = countMatchesBill cf curcafe
                                        kindmatch = countMatchesKind cf curcafe
                                        cuisinematch = countMatchesCuisine cf curcafe
                                        areamatch = countMatchesArea cf curcafe
                                        featurematch = countMatchesFeature cf curcafe
-                                   
+
                                    acc Data.List.++ [(kindmatch + billmatch + cuisinematch + areamatch + featurematch, curcafe)]
       -- and here we create results list [Entity Restaurants]
             createresult acc2 x = acc2 Data.List.++ [(fst x, snd x)]
@@ -197,12 +197,12 @@ showRestaurants (Entity restaurantid restaurant) = do
       city    <- handlerToWidget $ runDB $ get404 (restaurantsCityId restaurant)
       area    <- handlerToWidget $ runDB $ get404 (restaurantsAreaId restaurant)
       feature <- handlerToWidget $ runDB $ get404 (restaurantsFeatureId restaurant)
-    
+
       [whamlet|
-            <div .restaurant-info>         
+            <div .restaurant-info>
                       <p style="padding: 10px">
                          <img class="cafeimg" src="#{restaurantsImage restaurant}" width="120" class="lefti" />
-                         
+
                          &nbsp <br> &nbsp &nbsp  <b>#{restaurantsName restaurant}</b>  <br>
                          <br>
                          <br>
@@ -210,9 +210,9 @@ showRestaurants (Entity restaurantid restaurant) = do
                          Тип заведения: <em>  #{kindsKindname (kind)}</em>           <br>
                          Основная кухня: <em> #{cuisinesCuisinename (cuisine)} </em> <br>
                          Средний чек (на одного человека): <em> #{restaurantsBill restaurant}  </em>   <br>
-                         Город: <em> #{citiesCityname (city)} </em>          <br> 
-                         Район: <em> #{areasAreaname area}</em>             <br> 
-                         Подходит для: <em> #{featuresFeaturename feature}</em>    <br> 
+                         Город: <em> #{citiesCityname (city)} </em>          <br>
+                         Район: <em> #{areasAreaname area}</em>             <br>
+                         Подходит для: <em> #{featuresFeaturename feature}</em>    <br>
                          Наличие парковки: <em> #{restaurantsParking restaurant}</em>  <br>
                          Наличие караоке / танцевальной площадки: <em> #{restaurantsDancing restaurant}</em>  <br>
                          Наличие террасы / двора: <em> #{restaurantsGarden restaurant}</em>   <br>
