@@ -62,8 +62,11 @@ postRestAddR = do
                           restId <- runDB $ insert $ Restaurants (name newRest) (kindId) (cuisineId) (bill newRest) (cityId) (areaId) (featureId) (boolToInt (parking newRest) ) (boolToInt (dancing newRest) ) (boolToInt (garden newRest) ) (description newRest) (image newRest)
                           maybeRest <- runDB $ get restId
                           case maybeRest of
-                              Nothing -> error "insert error"
-                              _ -> error "Ok"
+                              Nothing -> error "Our restaurant was not added"
+                              _ -> do
+                                defaultLayout $ do
+                                  setTitle "Cafe Adviser - добавить заведение"
+                                  $(widgetFile "addrest")
 
                           defaultLayout $ do
                             setTitle "Cafe Adviser - добавить заведение"
