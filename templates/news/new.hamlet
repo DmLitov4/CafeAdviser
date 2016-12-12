@@ -1,20 +1,27 @@
-    <center>
-      <h2>
-          Добавить отзыв
+<div .container>
+    <div .bs-docs-section id="redirectto">
+        <div .page-header>
+            <h3> Здесь Вы сможете оставить свой отзыв </h3>
 
-    <div .row>
-            <div .col-lg-6>
-                   <div .bs-callout bs-callout-info well>
-                       <form method=post action=@{NewNewsR} enctype=#{formEnctype}>
-                           ^{formWidget}
-                           <button .btn.btn-primary type="submit">
-                               Добавить
-    <center>
-       <h2> Все отзывы </h2>
+    <div .bs-docs-section id="form">
+        <div .page-header>
+            <img id="image3" src="/static/img/reviews.png" width="300">
+            <br>
+            <div .row>
+              <div .col-lg-6>
+                <div .bs-callout bs-callout-info well>
+                  <form method=post action=@{NewNewsR} enctype=#{formEnctype}>
+                    ^{formWidget}
+                    <button .btn.btn-primary type="submit">
+                      Добавить
 
-    $forall rate <- newsList
-        ^{allNews rate} -->
-<br>
-<br>
-<br>
-<br>
+            <h3> Все отзывы </h3>
+
+    <div .bs-docs-section id="reviews">
+      <div .page-header>
+        $forall rate <- newsList
+          ^{allNews rate}
+        <br>
+        <br>
+        <br>
+        <br>
