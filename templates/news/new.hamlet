@@ -1,3 +1,5 @@
+<script> function sform() {swal({title: "Добавление", text:"Отзыв был добавлен", type: "success", confirmButtonText: "OK!", closeOnConfirm: false}, function(){document.getElementById("f2").submit()})} </script>
+
 <div .container>
     <div .bs-docs-section id="redirectto">
         <div .page-header>

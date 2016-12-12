@@ -71,7 +71,7 @@ getForeignCity = toSqlKey 1
 
 addForm :: Form AddRestForm
 addForm = renderBootstrap3 BootstrapBasicForm $ AddRestForm
-    <$> areq textField        "Название заведения  " Nothing
+    <$> areq textField        "Название заведения:  " Nothing
     <*> areq (selectFieldList [("ресторан" :: Text, "ресторан"),("кафе", "кафе"), ("бар", "бар")]) "Тип заведения:  " Nothing
     <*> areq (selectFieldList [("русская" :: Text, "русская"),("французская", "французская"), ("итальянская", "итальянская"), ("США", "США"), ("японская", "японская"), ("латиноамериканская", "латиноамериканская"), ("грузинская", "грузинская"), ("индийская", "индийская")]) "Предпочитаемая кухня:  " Nothing
     <*> areq intField      "Средний чек: " Nothing
@@ -83,7 +83,6 @@ addForm = renderBootstrap3 BootstrapBasicForm $ AddRestForm
     <*> areq boolField        "Наличие террасы / двора:   " Nothing
     <*> areq textField        "Описание" Nothing
     <*> areq textField        "Ссылка на изображение" Nothing
-
 
 getRestAddR :: Handler Html
 getRestAddR = do

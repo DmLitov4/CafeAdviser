@@ -1,3 +1,5 @@
+<script> function sform() {swal({title: "Добавление", text:"Заведение было добавлено", type: "success", confirmButtonText: "OK!", closeOnConfirm: false}, function(){document.getElementById("f").submit()})} </script>
+
 <div .container>
     <!-- Starting
         ================================================== -->
@@ -16,8 +18,8 @@
         <div .row>
             <div .col-lg-6>
                 <div .bs-callout bs-callout-info well>
-                    <form .form-horizontal method=post action=@{RestAddR} enctype=#{formEnctype}>
+                    <form .form-horizontal method=post id="f" action=@{RestAddR} enctype=#{formEnctype}>
                         ^{formWidget}
 
-                        <button .btn.btn-primary type="submit">
+                        <button id="coolbutton" onclick="sform()" .btn.btn-primary type="button">
                             Добавить
