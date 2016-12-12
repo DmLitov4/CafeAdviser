@@ -1,3 +1,5 @@
+<script> function sform() {swal({title: "Добавление", text:"Отзыв был добавлен", type: "success", confirmButtonText: "OK!", closeOnConfirm: false}, function(){document.getElementById("f2").submit()})} </script>
+
     <center>
       <h2>
           Добавить отзыв
@@ -5,9 +7,9 @@
     <div .row>
             <div .col-lg-6>
                    <div .bs-callout bs-callout-info well>
-                       <form method=post action=@{NewNewsR} enctype=#{formEnctype}>
+                       <form id="f2" method=post action=@{NewNewsR} enctype=#{formEnctype}>
                            ^{formWidget}
-                           <button .btn.btn-primary type="submit">
+                           <button onclick="sform()" .btn.btn-primary type="button">
                                Добавить
     <center>
        <h2> Все отзывы </h2>
