@@ -9,5 +9,5 @@
 /comments CommentR POST
 
 /profile ProfileR GET
-/news/new NewNewsR GET POST
+/reviews NewNewsR GET POST
 /addrest RestAddR GET POST

@@ -39,7 +39,7 @@ getNewNewsR = do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
         setTitle "Cafe Adviser - страница отзывов"
-        $(widgetFile "news/new")
+        $(widgetFile "reviews")
 
 postNewNewsR :: Handler Html
 postNewNewsR = do
@@ -52,12 +52,12 @@ postNewNewsR = do
             	                let (commentFormId, commentTextareaId, commentListId) = commentIds
                                 aDomId <- newIdent
                                 setTitle "Cafe Adviser - страница отзывов"
-            	                $(widgetFile "news/new")
+            	                $(widgetFile "reviews")
             _ -> defaultLayout $ do
                               let (commentFormId, commentTextareaId, commentListId) = commentIds
                               aDomId <- newIdent
                               setTitle "Cafe Adviser - страница отзывов"
-                              $(widgetFile "news/new")
+                              $(widgetFile "reviews")
 
 allNews :: Entity News -> Widget
 allNews (Entity rateid rate) = do

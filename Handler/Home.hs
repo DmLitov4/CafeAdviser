@@ -53,9 +53,9 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
     <*> aopt doubleField      "Средний чек: " Nothing
     <*> areq (selectFieldList [("Ростов-на-Дону" :: Text, "Ростов-на-Дону")]) "Город:  * " Nothing
     <*> aopt (selectFieldList [("Центр" :: Text, "Центр"), ("Западный", "Западный"), ("Северный", "Северный"), ("Александровка", "Александровка"), ("Сельмаш", "Сельмаш")]) "Район:  " Nothing
-    <*> aopt (selectFieldList [("День Рождения" :: Text, "День Рождения"), ("свадьба", "свадьба"), ("корпоратив", "корпоратив")]) "Подходит для:  " Nothing
+    <*> aopt (selectFieldList [("день рождения" :: Text, "день рождения"), ("свадьба", "свадьба"), ("корпоратив", "корпоратив")]) "Подходит для:  " Nothing
     <*> aopt boolField        "Наличие парковки:  * " Nothing
-    <*> aopt boolField        "Наличие танцплощадки: * " Nothing
+    <*> aopt boolField        "Наличие караоке / танцплощадки: * " Nothing
     <*> aopt boolField        "Наличие террасы / двора: * " Nothing
 
 
@@ -120,7 +120,7 @@ getForeignArea t
 
 getForeignFeature :: Text -> Int64
 getForeignFeature t
-               | t == "День Рождения" = 1
+               | t == "день рождения" = 1
                | t == "свадьба" = 2
                | t == "корпоратив" = 3
                | otherwise = -1
