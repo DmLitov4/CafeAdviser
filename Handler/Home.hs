@@ -206,7 +206,7 @@ showRestaurants (Entity restaurantid restaurant) = do
                          &nbsp <br> &nbsp &nbsp  <b>#{restaurantsName restaurant}</b>  <br>
                          <br>
                          <br>
-                         <br>
+                         <br> <i>#{restaurantsDescription restaurant}</i> <br>
                          Тип заведения: <em>  #{kindsKindname (kind)}</em>           <br>
                          Основная кухня: <em> #{cuisinesCuisinename (cuisine)} </em> <br>
                          Средний чек (на одного человека): <em> #{restaurantsBill restaurant}  </em>   <br>
