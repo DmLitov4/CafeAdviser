@@ -1,7 +1,5 @@
 # haskell and yesod
 
-dist/
-dist-*/
 cabal-dev
 *~
 *.o

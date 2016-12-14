@@ -12,9 +12,9 @@
             <div .row>
               <div .col-lg-6>
                 <div .bs-callout bs-callout-info well>
-                  <form method=post action=@{NewNewsR} enctype=#{formEnctype}>
+                  <form .form-horizontal method=post id="f2" action=@{NewNewsR} enctype=#{formEnctype}>
                     ^{formWidget}
-                    <button .btn.btn-primary type="submit">
+                    <button onclick="sform()" .btn.btn-primary type="button">
                       Добавить
 
             <h3> Все отзывы </h3>
