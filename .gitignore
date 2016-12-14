@@ -1,7 +1,9 @@
 # haskell and yesod
 
 cabal-dev
+,
 *~
+*.out
 *.o
 *.o_p
 *.hi
